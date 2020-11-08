@@ -40,14 +40,14 @@ public final class JNIUtils {
     return libraryName;
   }
 
-  public static void loadImplementation(Class cls) {
+  public static synchronized void loadImplementation(Class cls) {
     String libraryName = normalizeClassName(cls);
     libraryName = libraryName + "__jni";
     logger.info("Loading implementation: " + libraryName);
     System.loadLibrary(libraryName);
   }
 
-  public static void loadTypesupport(Class cls) {
+  public static synchronized void loadTypesupport(Class cls) {
     String libraryName = normalizeClassName(cls);
     libraryName = libraryName + "__jni__" + JNIUtils.TYPESUPPORT;
     logger.info("Loading typesupport: " + libraryName);
