@@ -148,7 +148,7 @@ public final class RCLJava {
    * @param namespace The namespace of the node.
    * @return A pointer to the underlying ROS2 node structure.
    */
-  private static native long nativeCreateNodeHandle(String nodeName, String namespace);
+  private static native long nativeCreateNodeHandle(String nodeName, String namespace, long domain);
 
   /**
    * @return The identifier of the currently active RMW implementation via the
@@ -185,8 +185,8 @@ public final class RCLJava {
    * @return A @{link Node} that represents the underlying ROS2 node
    *     structure.
    */
-  public static Node createNode(final String nodeName) {
-    return createNode(nodeName, "");
+  public static Node createNode(final String nodeName, long domainId) {
+    return createNode(nodeName, "", domainId);
   }
 
   /**
@@ -197,12 +197,12 @@ public final class RCLJava {
    * @return A @{link Node} that represents the underlying ROS2 node
    *     structure.
    */
-  public static Node createNode(final String nodeName, final String namespace) {
-    long nodeHandle = nativeCreateNodeHandle(nodeName, namespace);
-    Node node = new NodeImpl(nodeHandle, nodeName);
-    nodes.add(node);
-    return node;
-  }
+  public static Node createNode(final String nodeName, final String namespace, long domainId) {
+      long nodeHandle = nativeCreateNodeHandle(nodeName, namespace, domainId);
+      Node node = new NodeImpl(nodeHandle, nodeName);
+      nodes.add(node);
+      return node;
+    }
 
   public static void spin(final Node node) {
     ComposableNode composableNode = new ComposableNode() {

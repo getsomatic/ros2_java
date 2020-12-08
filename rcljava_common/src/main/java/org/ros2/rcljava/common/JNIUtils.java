@@ -28,7 +28,7 @@ public final class JNIUtils {
    */
   private JNIUtils() {}
 
-  private static String normalizeClassName(Class cls) {
+  private static synchronized String normalizeClassName(Class cls) {
     String className = cls.getCanonicalName();
 
     // Convert from camel case to underscores using the same regex as:
